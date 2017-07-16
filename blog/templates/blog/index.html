@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}我的博客{% endblock %}
+
+{% block header %}博客文章{% endblock %}
+
+{% block content %}
+    {% for post in blog_posts %}
+        <h4>{{post.title}}</h4>
+        <p>{{post.timestamp}}</p>
+        <p>{{post.body}}</p>
+    {% endfor %}
+{% endblock %}
