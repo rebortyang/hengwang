@@ -47,7 +47,7 @@ class ArticleDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         # 获取数据的方法：1）URL 指定返回pk；2）URL 指定返回slug(需要在模型里面加入slug_field);
-        print('-'*10)
+
         # 根据传入的数据在model里查询结果
         content = super(ArticleDetailView, self).get_context_data(**kwargs)
         # 加入额外数据
@@ -55,3 +55,10 @@ class ArticleDetailView(DetailView):
         # content 是一个dict，里面有model指定的数据，还有你额外添加的数据，可以通过键名来访问数据；
         # 如：访问model指定的数据， blog_body - 这是你上面指定的名字,没指定的话通过object访问；额外数据则根据键名now、userInfo
         return content
+
+
+# 文章列表
+def post_of_love(request):
+    love_list = BlogBody.objects.filter(blog_type='love')
+
+    return render(request, 'blog/list.html', {'love_lists': love_list})
