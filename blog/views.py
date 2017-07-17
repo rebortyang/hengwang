@@ -8,3 +8,9 @@ def index(request):
     blog_body = BlogBody.objects.all()
 
     return render(request, 'blog/index.html', {'userInfo': user_info, 'blogBody': blog_body})
+
+
+def article(request, blog_body_id=''):
+    blog_body_content = BlogBody.objects.get(id=blog_body_id)
+    print(blog_body_content)
+    return render(request, 'blog/view.html', {'blog_body': blog_body_content})
