@@ -20,6 +20,8 @@ from blog import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.index, name='home'),
-    url(r'^article/(?P<blog_body_id>[0-9]+)/$', views.article, name='article'),
+    # url(r'^$', views.index, name='home'),
+    # url(r'^article/(?P<blog_body_id>[0-9]+)/$', views.article, name='article'),
+    url(r'^$', views.ArticleListView.as_view(), name='home'),
+    url(r'^article/(?P<pk>[0-9]+)/$', views.ArticleDetailView.as_view(), name='article'),
 ]
