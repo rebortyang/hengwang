@@ -25,4 +25,6 @@ urlpatterns = [
     url(r'^$', views.ArticleListView.as_view(), name='home'),
     url(r'^article/(?P<pk>[0-9]+)/$', views.ArticleDetailView.as_view(), name='article'),
     url(r'^love/$', views.post_of_love, name='post_of_love'),
+    url(r'^add_article/$',views.add_article, name='add_article'),
+    url(r'^sub_article/$',views.sub_article, name='sub_article'),
 ]
