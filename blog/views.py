@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 # Create your views here.
 from django.views.generic import ListView, DetailView
+from django.views.generic import UpdateView, DeleteView
 from django.utils import timezone
 
 from .models import UserInfo, BlogBody
@@ -99,3 +100,41 @@ def sub_article(request):
             return redirect('post_of_love')
     else:
         return redirect('add_article')
+
+
+def del_article(request, blog_body_id):
+    BlogBody.objects.get(pk=blog_body_id).delete()
+
+    return redirect('home')
+
+
+class ArticleUpdateView(UpdateView):
+    model = BlogBody
+    fields = ['blog_title', 'blog_body', 'blog_type', 'blog_imgurl', 'blog_author']
+    template_name = 'blog/edit_article.html'
+
+    def get_context_data(self, **kwargs):
+        content = super(ArticleUpdateView,self).get_context_data(**kwargs)
+
+        content['up_article_id'] = self.object.id
+        print(content)
+
+        return content
+
+
+def upadte_submit_article(request, up_article_id):
+    if request.method == 'POST':
+        form = AddArticleForm(request.POST)
+        if form.is_valid():
+            blog_title = form.cleaned_data['blog_title']
+            blog_type = form.cleaned_data['blog_type']
+            blog_body = form.cleaned_data['blog_body']
+            blog_imgurl = form.cleaned_data['blog_imgurl']
+            blog_author = form.cleaned_data['blog_author']
+
+            update_article = BlogBody.objects.filter(pk=up_article_id)
+            print(update_article)
+            update_article.update(blog_title=blog_title, blog_type=blog_type,
+                                  blog_body=blog_body,blog_imgurl=blog_imgurl, blog_author=blog_author)
+
+            return redirect('/article/{0}/'.format(up_article_id,))

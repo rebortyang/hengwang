@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load custom_markdown  %}
 {% block bodycontent %}
 <div id="mainbody">
   <div class="blogs">
@@ -8,8 +8,9 @@
       <h1 class="c_titile">{{blog_body.blog_title}}</h1>
       <p class="box">发布时间：{{blog_body.blog_timestamp}}<span>编辑：{{blog_body.blog_author}}</span>阅读（30）</p>
       <ul>
-        <p>{{blog_body.blog_body}}</p>
+        <p>{{blog_body.blog_body|custom_markdown}}</p>
       </ul>
+      <p><a href="{% url 'edit_article' blog_body.id %}">编辑</a>&nbsp;&nbsp;&nbsp;<a href="{% url 'del_article' blog_body.id %}"  style="color: #a41515">删除</a></p>
       <div class="share">
         <!-- Baidu Button BEGIN -->
         <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare"> <span class="bds_more">分享到：</span> <a class="bds_qzone"></a> <a class="bds_tsina"></a> <a class="bds_tqq"></a> <a class="bds_renren"></a> <a class="bds_t163"></a> <a class="shareCount"></a> </div>

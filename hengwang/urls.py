@@ -27,4 +27,7 @@ urlpatterns = [
     url(r'^love/$', views.post_of_love, name='post_of_love'),
     url(r'^add_article/$',views.add_article, name='add_article'),
     url(r'^sub_article/$',views.sub_article, name='sub_article'),
+    url(r'^del_article/(?P<blog_body_id>[0-9]+)/$', views.del_article, name='del_article'),
+    url(r'^edit_article/(?P<pk>[0-9]+)/$', views.ArticleUpdateView.as_view(), name='edit_article'),
+    url(r'^up_sub_article/(?P<up_article_id>[0-9]+)/$', views.upadte_submit_article, name='up_sub_article'),
 ]
