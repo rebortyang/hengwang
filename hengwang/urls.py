@@ -30,4 +30,5 @@ urlpatterns = [
     url(r'^del_article/(?P<blog_body_id>[0-9]+)/$', views.del_article, name='del_article'),
     url(r'^edit_article/(?P<pk>[0-9]+)/$', views.ArticleUpdateView.as_view(), name='edit_article'),
     url(r'^up_sub_article/(?P<up_article_id>[0-9]+)/$', views.upadte_submit_article, name='up_sub_article'),
+    url(r'^today_on_history/$', views.today_on_history, name='today_on_history'),
 ]

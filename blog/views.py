@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 # Create your views here.
 from django.views.generic import ListView, DetailView
 from django.views.generic import UpdateView, DeleteView
+
 from django.utils import timezone
+from datetime import datetime
 
 from .models import UserInfo, BlogBody
 from .forms import AddArticleForm
+from  .common import TodayOnHistory
 
 import time
 
@@ -114,10 +118,9 @@ class ArticleUpdateView(UpdateView):
     template_name = 'blog/edit_article.html'
 
     def get_context_data(self, **kwargs):
-        content = super(ArticleUpdateView,self).get_context_data(**kwargs)
+        content = super(ArticleUpdateView, self).get_context_data(**kwargs)
 
         content['up_article_id'] = self.object.id
-        print(content)
 
         return content
 
@@ -133,8 +136,14 @@ def upadte_submit_article(request, up_article_id):
             blog_author = form.cleaned_data['blog_author']
 
             update_article = BlogBody.objects.filter(pk=up_article_id)
-            print(update_article)
+
             update_article.update(blog_title=blog_title, blog_type=blog_type,
                                   blog_body=blog_body,blog_imgurl=blog_imgurl, blog_author=blog_author)
 
             return redirect('/article/{0}/'.format(up_article_id,))
+
+
+def today_on_history(request):
+    his = TodayOnHistory()
+
+    return JsonResponse(his.get_history(), safe=False)

@@ -29,3 +29,30 @@ class BlogBody(models.Model):
     blog_timestamp = models.DateTimeField('时间')
     blog_imgurl = models.CharField('图片', max_length=50, null=True)
     blog_author = models.CharField('作者', max_length=20)
+
+
+class HistoryDate(models.Model):
+    year = models.IntegerField()
+    month = models.IntegerField()
+    day = models.IntegerField()
+
+    class Meta:
+        db_table = 'historyDate'
+
+    def __str__(self):
+        return 'date: {0}-{1}-{2}'.format(self.year, self.month, self.day)
+
+
+class HistoryRecords(models.Model):
+    """
+        blog/models.py
+        '历史的今天'数据库模型设计
+    """
+    historyDate = models.ForeignKey('HistoryDate', on_delete=models.CASCADE)
+    description = models.CharField(max_length=200)
+
+    class Meta:
+        db_table = 'historyRecords'
+
+    def __str__(self):
+        return self.description
