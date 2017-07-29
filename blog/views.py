@@ -4,6 +4,8 @@ from django.http import JsonResponse
 from django.views.generic import ListView, DetailView
 from django.views.generic import UpdateView, DeleteView
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 from django.utils import timezone
 from datetime import datetime
 
@@ -147,3 +149,18 @@ def today_on_history(request):
     his = TodayOnHistory()
 
     return JsonResponse(his.get_history(), safe=False)
+
+
+def lists_article_pagination(request):
+    article_lists = BlogBody.objects.all()
+    paginator = Paginator(article_lists, 2)
+    page = request.GET.get('page') if request.GET.get('page') else 1
+    print(page)
+    try:
+        contacts = paginator.page(page)
+    except EmptyPage:
+        contacts = paginator.page(1)
+    except PageNotAnInteger:
+        contacts = paginator.page(paginator.num_pages)
+    print(contacts)
+    return render(request, 'blog/lists_articles.html', {'contacts': contacts})

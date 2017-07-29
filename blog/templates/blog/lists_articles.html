@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block bodycontent %}
+
+{% for contact in contacts %}
+    <style>
+        .lists_articles_body {background-color: #bbccdd;}
+        #lists_articles {color: #006666;}
+        .pagination {color: #993333; background-color: #bbccdd;}
+
+    </style>
+    <div class="lists_articles_body">
+        <p id="lists_articles">{{ contact.blog_title }}</p>
+    </div>
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <a href="?page={{ contacts.previous_page_number }}">上一页</a>
+        {% endif %}
+
+        <span class="current">
+            第 {{ contacts.number }} 页
+        </span>
+
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">下一页</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}
