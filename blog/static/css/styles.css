@@ -118,3 +118,6 @@ footer { background: rgba(0, 0, 0, 0.44); -webkit-box-shadow: 0 -1px 0 rgba(0,0,
 .flickr ul li img:hover { opacity: 0.2 }
 .footer-bottom { background: rgba(0, 0, 0, 0.55); overflow: hidden; }
 .footer-bottom p { width: 1000px; margin: 0 auto; padding: 10px 0; }
+
+/* ·ÖÒ³ */
+#pagination  {width: 666px; color: #993333; text-align: center;}

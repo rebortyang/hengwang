@@ -36,10 +36,12 @@ class ArticleListView(ListView):
     model = BlogBody
     context_object_name = 'blogBody'
     template_name = 'blog/index.html'
+    paginate_by = 2
 
     # 不使用getXXX方法，就是默认返回model指定的数据
     # 使用getXXX方法，可以添加额外的数据
     def get_context_data(self, **kwargs):
+
         # 调用父类方法，返回model指定的数据
         content = super(ArticleListView, self).get_context_data(**kwargs)
         # 添加额外数据
@@ -47,6 +49,7 @@ class ArticleListView(ListView):
         content['userInfo'] = UserInfo.objects.first()
         # content 是一个dict，里面有model指定的数据，还有你额外添加的数据，可以通过键名来访问数据；
         # 如：访问model指定的数据， blogBody - 这是你上面指定的名字，未指定的需要通过object_list；额外数据则根据键名now、userInfo获取
+        print(content)
         return content
 
 
@@ -71,7 +74,16 @@ class ArticleDetailView(DetailView):
 def post_of_love(request):
     love_list = BlogBody.objects.filter(blog_type='love')
 
-    return render(request, 'blog/list.html', {'love_lists': love_list})
+    paginator = Paginator(love_list, 2)
+    page = request.GET.get('page') if request.GET.get('page') else 1
+    try:
+        contacts = paginator.page(page)
+    except EmptyPage:
+        contacts = paginator.page(1)
+    except PageNotAnInteger:
+        contacts = paginator.page(paginator.num_pages)
+
+    return render(request, 'blog/list.html', {'love_lists': contacts})
 
 
 # 增加文章

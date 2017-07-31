@@ -26,6 +26,19 @@
         <!--arrow_box end-->
       </li>
       {% endfor %}
+      <div id="pagination">
+      <span class="step_links">
+        {% if love_lists.has_previous %}
+          <a href="?page={{love_lists.previous_page_number}}">上一页</a>
+        {% endif %}
+        <span class="current">
+          第{{love_lists.number}}页
+        </span>
+        {% if love_lists.has_next %}
+          <a href="?page={{love_lists.next_page_number}}">下一页</a>
+        {% endif %}
+      </span>
+    </div>
     </ul>
     <!--bloglist end-->
     <aside>
